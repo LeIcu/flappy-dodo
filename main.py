@@ -12,15 +12,15 @@ score = 0
 high_score = 0
 has_moved = False
 game_state = 1
-
 # set up window
 
-w_width = 800
-w_height = 600
+w_width = 600
+w_height = 800
 
 screen = pygame.display.set_mode((w_width, w_height))
 pygame.display.set_caption('Flappy Dodo')
 font = pygame.font.Font("font/BaiJamjuree-Bold.ttf", 60)
+small_font = pygame.font.Font("font/BaiJamjuree-Bold.ttf", 28)
 clock = pygame.time.Clock()
 fps = 60
 
@@ -37,9 +37,10 @@ ground_img = pygame.image.load("assets/ground.png")
 dodo_img = pygame.image.load("assets/dodojump1.png")
 pipe_down_img = pygame.image.load("assets/pipe_down.png")
 pipe_up_img = pygame.image.load("assets/pipe_up.png")
-pipe_down_img = pygame.transform.scale(pipe_down_img, (200, 450))
-pipe_up_img = pygame.transform.scale(pipe_up_img, (200, 450))
+pipe_down_img = pygame.transform.scale(pipe_down_img, (200, 560))
+pipe_up_img = pygame.transform.scale(pipe_up_img, (200, 560))
 bg_img = pygame.transform.scale(bg_img, (w_width, w_height))
+ground_img = pygame.transform.scale(ground_img, (w_width, ground_img.get_height()))
 
 # moving bg
 bg_scroll_speed = 1
@@ -113,7 +114,7 @@ def scoreboard():
     show_score = font.render(str(score), True, (255, 255, 255))
     score_rect = show_score.get_rect(center=(w_width//2, 64))
     screen.blit(show_score, score_rect)
-    hs_text = font.render(f"Best: {high_score}", True, (255, 255, 255))
+    hs_text = small_font.render(f"Best: {high_score}", True, (255, 255, 255))
     screen.blit(hs_text, (10,10))
 
 
@@ -156,8 +157,8 @@ def game():
                             pipe_top_height = pipe.height
                             pipe_gap = pipe.gap
                             pipe_bottom_y = pipe_top_height + pipe_gap
-                            pipe_padding_x = 12
-                            pipe_padding_y = 10
+                            pipe_padding_x = 10
+                            pipe_padding_y = 8
 
                             pipe_top_rect = pygame.Rect(
                                 pipe.x + pipe_padding_x,
@@ -209,14 +210,14 @@ def game():
             if bg_x_pos <= -w_width:
                 bg_x_pos = 0
 
-            if ground_x_pos <= -w_width:
+            if ground_x_pos <= -ground_img.get_width():
                 ground_x_pos = 0
 
 
             screen.blit(bg_img, (bg_x_pos, 0))
             screen.blit(bg_img, (bg_x_pos + w_width, 0))
             screen.blit(ground_img, (ground_x_pos, 536))
-            screen.blit(ground_img, (ground_x_pos + w_width, 536))
+            screen.blit(ground_img, (ground_x_pos + ground_img.get_width(), 536))
 
             for pipe in pipes:
                 pipe.draw()

@@ -64,7 +64,7 @@ bg_scroll_speed = 1
 # moving ground
 ground_scroll_speed = 2
 # smaller gap makes top/bottom pipes closer
-pipe_gap_size = 100
+pipe_gap_size = 113
 pipe_spacing = 320
 
 
